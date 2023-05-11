@@ -13,7 +13,7 @@ function build_openssl() {
     cd /build
 
     # Download
-    curl -LO https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
+    curl -k -LO https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
     tar zxvf openssl-${OPENSSL_VERSION}.tar.gz
     cd openssl-${OPENSSL_VERSION}
 
@@ -27,13 +27,16 @@ function build_openssl() {
 
 function build_nmap() {
     cd /build
-
+cat > /etc/apt/sources.list << EOF
+deb http://archive.debian.org/debian/ jessie main contrib non-free
+deb http://archive.debian.org/debian-security jessie/updates main contrib non-free
+EOF
     # Install Python
     DEBIAN_FRONTEND=noninteractive apt-get update
-    DEBIAN_FRONTEND=noninteractive apt-get install -yy python
+    DEBIAN_FRONTEND=noninteractive apt-get install -y python
 
     # Download
-    curl -LO http://nmap.org/dist/nmap-${NMAP_VERSION}.tar.bz2
+    curl -k -LO http://nmap.org/dist/nmap-${NMAP_VERSION}.tar.bz2
     tar xjvf nmap-${NMAP_VERSION}.tar.bz2
     cd nmap-${NMAP_VERSION}
 
